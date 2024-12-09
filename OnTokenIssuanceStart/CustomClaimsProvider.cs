@@ -4,12 +4,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart;
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Company.AuthEvents.CustomClaimsProviderWebJob
 {
     public static class CustomClaimsProviderWebJob
     {
-        [FunctionName("OnTokenIssuanceStart/CustomClaimsProviderWebJob")]
+        [FunctionName("OnTokenIssuanceStart-CustomClaimsProvider1")]
         public static WebJobsAuthenticationEventResponse Run(
              [WebJobsAuthenticationEventsTrigger] WebJobsTokenIssuanceStartRequest request, ILogger log)
         {
@@ -22,12 +23,14 @@ namespace Company.AuthEvents.CustomClaimsProviderWebJob
                     string correlationId = request.Data.AuthenticationContext.CorrelationId.ToString();
 
                     // Fetches information about the user from external data store
+                    // Add your code here
+
                     // Add new claims to the token's response
                     request.Response.Actions.Add(
                             new WebJobsProvideClaimsForToken(
                                 new WebJobsAuthenticationEventsTokenClaim("dateOfBirth", "01/01/2000"),
                                 new WebJobsAuthenticationEventsTokenClaim("customRoles", "Writer", "Editor"),
-                                new WebJobsAuthenticationEventsTokenClaim("apiVersion", Assembly.GetExecutingAssembly().GetName().Version.ToString()),
+                                new WebJobsAuthenticationEventsTokenClaim("apiVersion", Assembly.GetExecutingAssembly().GetName().Version!.ToString()),
                                 new WebJobsAuthenticationEventsTokenClaim("correlationId", correlationId)
                                 ));
                 }
