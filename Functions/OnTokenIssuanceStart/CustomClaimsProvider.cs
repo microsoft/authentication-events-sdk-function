@@ -10,7 +10,7 @@ namespace Company.AuthEvents.CustomClaimsProviderWebJob
 {
     public static class CustomClaimsProviderWebJob
     {
-        [FunctionName("OnTokenIssuanceStart-CustomClaimsProvider1")]
+        [FunctionName("OnTokenIssuanceStart-CustomClaimsProvider")]
         public static WebJobsAuthenticationEventResponse Run(
              [WebJobsAuthenticationEventsTrigger] WebJobsTokenIssuanceStartRequest request, ILogger log)
         {
